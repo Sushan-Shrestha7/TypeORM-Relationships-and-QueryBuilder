@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  ManyToOne,
+} from 'typeorm';
 import { Assignment } from './assignment';
 import { Address } from './addresss';
 @Entity('students')
@@ -14,6 +20,6 @@ export class Student {
 
   @OneToMany(() => Assignment, (assignment) => assignment.student)
   assignments: Assignment[];
-  @OneToMany(() => Address, (address) => address.student)
-  addresses: Address[];
+  @ManyToOne(() => Address, (address) => address.student)
+  addresses: Address;
 }

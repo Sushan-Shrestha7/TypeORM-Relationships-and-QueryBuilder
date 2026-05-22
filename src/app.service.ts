@@ -72,4 +72,19 @@ export class AppService {
   async getassignmentsbyid(@Param('id') id: number) {
     return await this.assignmentRepository.findOne({ where: { id } });
   }
+  async getAddressById(@Param('id') id: number) {
+    return await this.addressRepository.findOne({ where: { id } });
+  }
+  async updateaddress(id: number, dto: Address) {
+    return await this.addressRepository.update(id, dto);
+  }
+  async deletestudent(id: number) {
+    return await this.studentRepository.delete(id);
+  }
+  async getStudent(id: number) {
+    return await this.studentRepository.findOne({
+      where: { id },
+      relations: { assignments: true, addresses: true },
+    });
+  }
 }
