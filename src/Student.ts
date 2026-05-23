@@ -2,7 +2,7 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  OneToMany,
+  ManyToMany,
   ManyToOne,
 } from 'typeorm';
 import { Assignment } from './assignment';
@@ -18,8 +18,8 @@ export class Student {
   @Column()
   password: string;
 
-  @OneToMany(() => Assignment, (assignment) => assignment.student)
-  assignments: Assignment[];
   @ManyToOne(() => Address, (address) => address.student)
   addresses: Address;
+  @ManyToMany(() => Assignment, (assignment) => assignment.student)
+  assignments: Assignment[];
 }

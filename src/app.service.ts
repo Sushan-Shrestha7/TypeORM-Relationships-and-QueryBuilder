@@ -38,7 +38,8 @@ export class AppService {
       .values({
         title: dto.title,
         description: dto.description,
-        student: student,
+        Completed: dto.Completed,
+        student: [student],
       })
       .execute();
 
@@ -54,17 +55,18 @@ export class AppService {
       throw new Error('student not found');
     }
 
-    const address = this.addressRepository.create({
-      street: dto.street,
-      zipCode: dto.zipCode,
-      student: [student],
-    });
-
-    return await this.addressRepository
+    const address = this.addressRepository
       .createQueryBuilder()
-      .relation(Address, 'student')
-      .of(address)
-      .add(student);
+      .insert()
+      .into(Address)
+      .values({
+        street: dto.street,
+        zipCode: dto.zipCode,
+        student: [student],
+      })
+      .execute();
+
+    return address;
   }
   async getAllStudents() {
     return await this.studentRepository.find();
@@ -77,6 +79,9 @@ export class AppService {
   }
   async updateaddress(id: number, dto: Address) {
     return await this.addressRepository.update(id, dto);
+  }
+  async updateassignment(id: number, dto: Assignment) {
+    return await this.assignmentRepository.update(id, dto);
   }
   async deletestudent(id: number) {
     return await this.studentRepository.delete(id);

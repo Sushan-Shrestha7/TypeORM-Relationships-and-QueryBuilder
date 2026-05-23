@@ -11,7 +11,6 @@ import { AppService } from './app.service';
 import { Student } from './Student';
 import { Assignment } from './assignment';
 import { Address } from './addresss';
-import { get } from 'http';
 
 @Controller()
 export class AppController {
@@ -39,6 +38,10 @@ export class AppController {
   @Get('/assignments/:id')
   async getAssignmentById(@Param('id') id: number) {
     return await this.appService.getassignmentsbyid(id);
+  }
+  @Put('/updateassignment/:id')
+  async updateassignment(id: number, dto: Assignment) {
+    return this.appService.updateassignment(id, dto);
   }
   @Put('/updateaddress/:id')
   async updateaddress(id: number, @Body() dto: Address) {

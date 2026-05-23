@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Student } from './Student';
 @Entity('assignments')
 export class Assignment {
@@ -8,10 +8,8 @@ export class Assignment {
   title: string;
   @Column()
   description: string;
-
-  @ManyToOne(() => Student, (student) => student.assignments, {
-    onDelete: 'CASCADE',
-    nullable: true,
-  })
-  student: Student;
+  @Column()
+  Completed: boolean;
+  @ManyToMany(() => Student, (student) => student.assignments)
+  student: Student[];
 }
