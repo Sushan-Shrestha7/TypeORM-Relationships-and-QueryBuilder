@@ -4,6 +4,8 @@ import {
   Column,
   ManyToMany,
   ManyToOne,
+  OneToOne,
+  OneToMany,
 } from 'typeorm';
 import { Assignment } from './assignment';
 import { Address } from './addresss';
@@ -18,8 +20,8 @@ export class Student {
   @Column()
   password: string;
 
-  @ManyToOne(() => Address, (address) => address.student)
+  @OneToOne(() => Address, (address) => address.student)
   addresses: Address;
-  @ManyToMany(() => Assignment, (assignment) => assignment.student)
+  @OneToMany(() => Assignment, (assignment) => assignment.student)
   assignments: Assignment[];
 }

@@ -1,8 +1,10 @@
 import {
   Column,
   Entity,
+  JoinColumn,
   ManyToMany,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Student } from './Student';
@@ -17,8 +19,9 @@ export class Address {
 
   @Column()
   zipCode: string;
-  @OneToMany(() => Student, (student) => student.addresses, {
+  @OneToOne(() => Student, (student) => student.addresses, {
     onDelete: 'CASCADE',
   })
-  student: Student[];
+  @JoinColumn({ name: 'studentId' })
+  student: Student;
 }

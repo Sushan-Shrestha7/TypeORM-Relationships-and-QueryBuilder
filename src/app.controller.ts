@@ -66,6 +66,6 @@ export class AppController {
   @Get('/students/:id')
   @ApiOperation({ summary: 'Get student by ID' })
   async getStudent(@Param('id') id: number) {
-    return await this.appService.getStudent(+id);
+    return await this.appService.getStudent(id);
   }
 }

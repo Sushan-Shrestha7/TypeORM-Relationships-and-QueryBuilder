@@ -39,7 +39,7 @@ export class AppService {
         title: dto.title,
         description: dto.description,
         Completed: dto.Completed,
-        student: [student],
+        student: student,
       })
       .execute();
 
@@ -62,7 +62,7 @@ export class AppService {
       .values({
         street: dto.street,
         zipCode: dto.zipCode,
-        student: [student],
+        student: student,
       })
       .execute();
 
@@ -87,9 +87,11 @@ export class AppService {
     return await this.studentRepository.delete(id);
   }
   async getStudent(id: number) {
+    console.log(id);
     return await this.studentRepository.findOne({
       where: { id },
-      relations: { assignments: true, addresses: true },
+
+      relations: ['addresses', 'assignments'],
     });
   }
 }

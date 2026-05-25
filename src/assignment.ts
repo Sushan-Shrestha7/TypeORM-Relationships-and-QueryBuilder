@@ -1,4 +1,11 @@
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToMany,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Student } from './Student';
 import { ApiProperty } from 'node_modules/@nestjs/swagger/dist/decorators/api-property.decorator';
 import { IsEmpty, IsOptional } from 'class-validator';
@@ -14,7 +21,6 @@ export class Assignment {
   title: string;
   @Column()
   @IsOptional()
-  @IsEmpty()
   @ApiProperty({
     example: 'Solve the following problems',
     description: 'The description of the assignment',
@@ -26,6 +32,7 @@ export class Assignment {
     description: 'The completion status of the assignment',
   })
   Completed: boolean;
-  @ManyToMany(() => Student, (student) => student.assignments)
-  student: Student[];
+  @ManyToOne(() => Student, (student) => student.assignments)
+  @JoinColumn({ name: 'studentId' })
+  student: Student;
 }
